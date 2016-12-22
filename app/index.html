@@ -2,23 +2,60 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Converter</title>
+        <title>Конвертер</title>
         <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
-        <div class="page-container"> 
-            <div>
-                <select name="from-select" id="from-select"></select> 
-                <select name="to-select" id="to-select"></select>    
+        <div class="page-container">
+            <header class="custom-page-header">
+                <h1 class="page-label">
+                    <span><i class="fa fa-usd" aria-hidden="true"></i> Конвертер</span>
+                </h1>
+            </header>
+            <div class="content-container">
+                <div class="controls-container">
+                    <div class="controls-group">
+                        <label for="from-select">Имеющаяся валюта:</label>
+                        <select class="currency-select" name="from-select" id="from-select"></select>
+                    </div>
+
+                    <div class="controls-group">
+                        <label for="to-select">Нужная валюта:</label> 
+                        <select class="currency-select" name="to-select" id="to-select"></select>    
+                    </div>
+                </div>
+
+                <div class="controls-container">
+                    <button class="swap-button" id="swap-currencies-btn"><i class="fa fa-exchange" aria-hidden="true"></i></button>
+                </div>
+            
+                <div class="controls-container">
+                    <div class="controls-group">
+                        <label for="from-converting-input">Сумма:</label> 
+                        <input class="currency-input" type="number" name="from-converting" id="from-converting-input" value="0">
+                    </div>
+
+                    <div class="controls-group">
+                        <label for="to-converting-input">Сумма:</label> 
+                        <input class="currency-input" type="number" name="to-converting" id="to-converting-input" value="0">
+                    </div>
+                </div> 
             </div>
-            <div>
-                 <input type="number" name="from-converting" id="from-converting-input" value="0">
-                 <button id="swap-currencies-btn">swap</button>
-                 <input type="number" name="to-converting" id="to-converting-input" value="0">
-            </div> 
-            <!--<button id="convert-btn">Convert</button>
-            <div id="result"></div>-->
+
+            <div class="push"></div>
         </div>
+        
+        <footer class="page-footer">
+            <div class="footer-content">
+                <p>Cледите за обновлениями</p>
+                <div class="follow">
+                    <a target="_blank" href="https://vk.com/hans_hans"><i class="fa fa-vk" aria-hidden="true"></i></a>
+                    <a target="_blank" href="https://github.com/NikolayKovzik450501"><i class="fa fa-github" aria-hidden="true"></i></a>
+                </div>
+                <p class="copyright">&copy; Nikolai Kovzik 2016</p>
+            </div>
+        </footer>
 
         <script src="./js/external/jquery-3.1.1.min.js"></script>
         <script src="./js/external/Q.js"></script>

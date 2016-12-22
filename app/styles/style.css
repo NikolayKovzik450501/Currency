@@ -1,0 +1,144 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, 
+body {
+    height: 100%;
+}
+
+body {
+    background-color: #ecf0f1;
+    min-width: 800px;
+}
+
+a {
+    text-decoration: none;
+}
+
+section {
+    color: #464547;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.currency-select,
+.currency-input {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    height: 34px;
+    width: 100%;
+}
+
+.currency-input {
+    padding-left: 4px;
+}
+
+.swap-button {
+    background-color: white;
+    border: 1px solid #464547;
+    border-radius: 4px;
+    color: #464547;
+    font-size: 40px;
+    font-weight: 100;
+    transition: background-color 0.3s ease;
+    width: 50px;
+}
+
+.swap-button:hover {
+    background-color: #464547;
+    color: white;
+}
+
+
+.page-container {
+    min-height: 100%;
+    margin-bottom: -200px;
+}
+
+.content-container {
+    margin: 30px auto;
+    width: 70%;
+}
+
+.custom-page-header {
+    display: flex;
+    justify-content: space-between;
+    height: 100px;
+    padding: 30px;
+}
+
+.page-label {
+    margin: 0px;
+    color: white;
+}
+
+.controls-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.controls-group {
+    width: 45%;
+}
+
+label {
+    display: block;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 5px;
+}
+
+.push {
+    height: 200px;
+}
+
+.custom-page-header,
+.page-footer {
+    background-color: #464547;
+}
+
+.page-footer {
+    height: 200px;
+    padding-top: 30px;
+}
+
+.footer-content {
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 20px auto;
+    text-align: center;
+    width: 300px;
+}
+
+.footer-content a {
+    border: 1px solid white;
+    border-radius: 50%;
+    color: white;
+    font-size: 26px;
+    display: block;
+    height: 50px;
+    margin-left: 10px;
+    padding-top: 8px;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    width: 50px;
+}
+
+.footer-content a:hover {
+    background-color: white;
+    color: #464547;
+}
+
+.follow {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.copyright {
+    font-size: 14px;
+}
