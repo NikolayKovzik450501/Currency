@@ -11,7 +11,6 @@ body {
 
 body {
     background-color: #ecf0f1;
-    min-width: 800px;
 }
 
 a {
@@ -60,7 +59,7 @@ section {
 
 .content-container {
     margin: 30px auto;
-    width: 70%;
+    width: 945px;
 }
 
 .custom-page-header {
@@ -75,6 +74,9 @@ section {
     color: white;
 }
 
+.not-displayed {
+    display: none;
+}
 .controls-container {
     display: flex;
     justify-content: space-around;
@@ -89,6 +91,25 @@ label {
     display: block;
     font-family: Arial, Helvetica, sans-serif;
     margin-bottom: 5px;
+}
+
+.changes-graph-container {
+    padding: 40px 20px 20px 20px;
+}
+.changes-graph-container h2 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    text-align: center;
+
+}
+
+.changes-graph-container .controls-group {
+    margin-left: 497px;
+}
+
+.changes-graph {
+    height: 400px;
+    margin-top: 20px;
 }
 
 .push {

@@ -1,5 +1,5 @@
 (function() {
-    var currencies;
+    var currencies, changes;
     
     var fromRate = 1;
     var toRate = 1;
@@ -10,7 +10,7 @@
         abbreviation: 'BLR',
         rate: 1
     };
-
+    
     $.ajax({
         type: 'GET',
         url: 'http://www.nbrb.by/API/ExRates/Currencies'
@@ -23,9 +23,10 @@
             } 
             
             return {
-               code: item.Cur_Code,
-               name: item.Cur_Name_Eng,
-               abbreviation: item.Cur_Abbreviation   
+                id: item.Cur_ID,
+                code: item.Cur_Code,
+                name: item.Cur_Name_Eng,
+                abbreviation: item.Cur_Abbreviation   
             };
          }).filter(function(item) {
              return item !== null;
@@ -48,8 +49,9 @@
 
         currencies = [blrCurrency].concat(currencies);
 
-        initSelect('#to-select');
-        initSelect('#from-select');
+        initSelectForConverter('#to-select');
+        initSelectForConverter('#from-select');
+        initSelectForChanges('#changes-currency-select');
     });
 
     $('#from-select').on('change', function(event) {
@@ -93,6 +95,53 @@
         $('#to-converting-input').val(convertedValue);
     });
 
+    $('#changes-currency-select').on('change', function(event) {
+        deleteAllTraces('changes-graph');
+        getChangesOfCurrencyRateAgainstBLRPerYear(+event.target.value);
+    });
+
+    function deleteAllTraces(graphId) { 
+        try {
+            while (true) {
+                Plotly.deleteTraces(graphId, 0); 
+            }
+        } catch (err) {}
+    }
+
+    function getChangesOfCurrencyRateAgainstBLRPerYear(currencyCode) {
+        var currentDate = new Date();
+        var startDate = (currentDate.getFullYear() - 1) + '-' + currentDate.getMonth() + '-' + currentDate.getDay();
+        var endDate = currentDate.getFullYear() + '-' + currentDate.getMonth() + '-' + currentDate.getDay();
+
+        var changesUrl = 'http://www.nbrb.by/API/ExRates/Rates/Dynamics/'+ currencyCode + 
+                         '?startDate=' + startDate + 
+                         '&endDate=' + endDate; 
+         $.ajax({
+            type: 'GET',
+            url: changesUrl
+        }).then(function(resposne) {
+            if (resposne.length === 0) {
+                alert("Нет статистики для данной валюты!");
+                $('#changes-graph').addClass('not-displayed');
+                return;
+            }
+
+            if ($('#changes-graph').hasClass('not-displayed')) {
+                $('#changes-graph').removeClass('not-displayed');
+            }
+
+            var dates = resposne.map(function(item) {
+                return item.Date;
+            });
+
+            var rates = resposne.map(function(item) {
+                return  item.Cur_OfficialRate;
+            });
+
+            Plotly.plot('changes-graph', [{x: dates, y: rates}], {margin: {t: 0}});
+        });
+    }
+
     function changeToConvertingInputAfterChangingCurrency() {
         var valueForConverting = +$('#from-converting-input').val();
 
@@ -101,12 +150,23 @@
         $('#to-converting-input').val(convertedValue);
     }
 
-    function initSelect(selectId) {
+    function initSelectForConverter(selectId) {
         var $select = $(selectId);
         var selectOptions = '';
 
         for (var i = 0; i < currencies.length; i++) {
             selectOptions += '<option value="' + currencies[i].rate + '">' + currencies[i].name + '(' + currencies[i].abbreviation + ')' + '</option>';
+        }
+
+        $select.append(selectOptions);
+    }
+
+    function initSelectForChanges() {
+        var $select = $('#changes-currency-select');
+        var selectOptions = '';
+
+        for (var i = 1; i < currencies.length; i++) {
+            selectOptions += '<option value="' + currencies[i].id + '">' + currencies[i].name + '(' + currencies[i].abbreviation + ')' + '</option>';
         }
 
         $select.append(selectOptions);

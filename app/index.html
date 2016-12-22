@@ -13,6 +13,7 @@
                     <span><i class="fa fa-usd" aria-hidden="true"></i> Конвертер</span>
                 </h1>
             </header>
+
             <div class="content-container">
                 <div class="controls-container">
                     <div class="controls-group">
@@ -40,7 +41,15 @@
                         <label for="to-converting-input">Сумма:</label> 
                         <input class="currency-input" type="number" name="to-converting" id="to-converting-input" value="0">
                     </div>
-                </div> 
+                </div>
+
+                <section class="changes-graph-container">
+                    <h2>Динамика официального курса белорусского рубля по отношению к заданной иностранной валюте</h2>
+                    <div class="controls-group">
+                        <select class="currency-select" name="from-select" id="changes-currency-select"></select>
+                    </div>
+                    <div id="changes-graph" class="changes-graph not-displayed"></div>
+                </setion>
             </div>
 
             <div class="push"></div>
@@ -53,12 +62,13 @@
                     <a target="_blank" href="https://vk.com/hans_hans"><i class="fa fa-vk" aria-hidden="true"></i></a>
                     <a target="_blank" href="https://github.com/NikolayKovzik450501"><i class="fa fa-github" aria-hidden="true"></i></a>
                 </div>
-                <p class="copyright">&copy; Nikolai Kovzik 2016</p>
+                <p class="copyright">&copy; Николай Ковзик 2016</p>
             </div>
         </footer>
 
         <script src="./js/external/jquery-3.1.1.min.js"></script>
         <script src="./js/external/Q.js"></script>
+        <script src="./js/external/plotly-latest.min.js"></script>
         <script src="./js/app.js"></script>
     </body>
 </html>
