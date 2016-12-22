@@ -1,3 +1,4 @@
+// response ответ
 (function() {
     var currencies, changes;
     
@@ -14,8 +15,8 @@
     $.ajax({
         type: 'GET',
         url: 'http://www.nbrb.by/API/ExRates/Currencies'      
-    }).then(function(response) {
-         currencies = response.map(function(item) {
+    }).then(function(response) { 
+         currencies = response.map(function(item) {    // map возвращает новый массив на основании response
             var dateEnd = Date.parse(item.Cur_DateEnd); 
             //если срок вывода валюты из оборота меньше текущего времени, то валюта не поддерживается нацбанком
             if (dateEnd < Date.now()) {
@@ -31,7 +32,7 @@
          }).filter(function(item) {
              return item !== null;
          });
-        //формирование запросов на получение курсов валют относительно белорусского рубля
+        //формирование массива запросов на получение курсов валют относительно белорусского рубля
          var ratesPromises = currencies.map(function(item) {                
              var ratesUrl = 'http://www.nbrb.by/API/ExRates/Rates/' + item.code + '?ParamMode=1';
 
@@ -107,8 +108,9 @@
             }
         } catch (err) {}
     }
-
-    function getChangesOfCurrencyRateAgainstBLRPerYear(currencyCode) {
+    
+    function getChangesOfCurrencyRateAgainstBLRPerYear(currencyCode) {            
+        //формирование url для запроса измениний изменений валют относительно беларусского рубля за год
         var currentDate = new Date();
         var startDate = (currentDate.getFullYear() - 1) + '-' + currentDate.getMonth() + '-' + currentDate.getDay();
         var endDate = currentDate.getFullYear() + '-' + currentDate.getMonth() + '-' + currentDate.getDay();
