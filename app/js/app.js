@@ -10,14 +10,14 @@
         abbreviation: 'BLR',
         rate: 1
     };
-    
+    //получение информации о существующих валютах
     $.ajax({
         type: 'GET',
-        url: 'http://www.nbrb.by/API/ExRates/Currencies'
+        url: 'http://www.nbrb.by/API/ExRates/Currencies'      
     }).then(function(response) {
          currencies = response.map(function(item) {
-            var dateEnd = Date.parse(item.Cur_DateEnd);
-            
+            var dateEnd = Date.parse(item.Cur_DateEnd); 
+            //если срок вывода валюты из оборота меньше текущего времени, то валюта не поддерживается нацбанком
             if (dateEnd < Date.now()) {
                 return null;
             } 
@@ -31,8 +31,8 @@
          }).filter(function(item) {
              return item !== null;
          });
-        
-         var ratesPromises = currencies.map(function(item) {
+        //формирование запросов на получение курсов валют относительно белорусского рубля
+         var ratesPromises = currencies.map(function(item) {                
              var ratesUrl = 'http://www.nbrb.by/API/ExRates/Rates/' + item.code + '?ParamMode=1';
 
              return $.ajax({
@@ -48,7 +48,7 @@
         }
 
         currencies = [blrCurrency].concat(currencies);
-
+        //инициализация селектов конвертера и статистики
         initSelectForConverter('#to-select');
         initSelectForConverter('#from-select');
         initSelectForChanges('#changes-currency-select');
