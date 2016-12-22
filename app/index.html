@@ -7,10 +7,17 @@
     </head>
     <body>
         <div class="page-container"> 
-            <select name="to-select" id="to-select"></select>            
-            <input type="number" name="value-for-converting" id="value-for-converting-input" placeholder="Enter value for converting">
-            <button id="convert-btn">Convert</button>
-            <div id="result"></div>
+            <div>
+                <select name="from-select" id="from-select"></select> 
+                <select name="to-select" id="to-select"></select>    
+            </div>
+            <div>
+                 <input type="number" name="from-converting" id="from-converting-input" value="0">
+                 <button id="swap-currencies-btn">swap</button>
+                 <input type="number" name="to-converting" id="to-converting-input" value="0">
+            </div> 
+            <!--<button id="convert-btn">Convert</button>
+            <div id="result"></div>-->
         </div>
 
         <script src="./js/external/jquery-3.1.1.min.js"></script>

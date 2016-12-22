@@ -1,6 +1,15 @@
 (function() {
-    var currencies, convertedValue;
-    var valueForConverting = 0;
+    var currencies;
+    
+    var fromRate = 1;
+    var toRate = 1;
+
+    var blrCurrency = {
+        code: 9999,
+        name: 'Belarussian ruble',
+        abbreviation: 'BLR',
+        rate: 1
+    };
 
     $.ajax({
         type: 'GET',
@@ -37,32 +46,67 @@
             currencies[i].rate = response[i].Cur_OfficialRate;
         }
 
-        initSelect();
+        currencies = [blrCurrency].concat(currencies);
+
+        initSelect('#to-select');
+        initSelect('#from-select');
     });
 
-    $('#value-for-converting-input').on('change', function(event) {
-        valueForConverting = +event.target.value;
+    $('#from-select').on('change', function(event) {
+        fromRate = event.target.value;
+
+        changeToConvertingInputAfterChangingCurrency();
     });
 
-    // $('#convert-btn').on('click', function() {
-    //     var ratesUrl = 'http://www.nbrb.by/API/ExRates/Rates/' + $('#to-select').val() + '?ParamMode=1';
+    $('#to-select').on('change', function(event) {
+        toRate = event.target.value;
 
-    //     $.ajax({
-    //         type: 'GET',
-    //         url: ratesUrl
-    //     }).done(function(response) {
-    //         convertedValue = +response.Cur_OfficialRate * valueForConverting;
+        changeToConvertingInputAfterChangingCurrency();
+    });
 
-    //         $('#result').html('result: ' + convertedValue);
-    //     });
-    // });
+    $('#from-converting-input').on('keyup', function(event) {
+        var valueForConverting = +event.target.value;
+        var convertedValue = valueForConverting * fromRate / toRate;
 
-    function initSelect() {
-        var $select = $('#to-select');
+        $('#to-converting-input').val(convertedValue);
+    });
+
+    $('#to-converting-input').on('keyup', function(event) {
+        var valueForConverting = +event.target.value;
+        var convertedValue = valueForConverting * toRate / fromRate;
+
+        $('#from-converting-input').val(convertedValue);
+    });
+
+    $('#swap-currencies-btn').on('click', function() {
+        var tempFromCurrency = $('#from-select').val();
+        $('#from-select').val($('#to-select').val());
+        $('#to-select').val(tempFromCurrency);
+
+        var tempRate = fromRate;
+        fromRate = toRate;
+        toRate = tempRate;
+
+        var valueForConverting = +$('#from-converting-input').val() ;
+        var convertedValue = valueForConverting * fromRate / toRate;
+
+        $('#to-converting-input').val(convertedValue);
+    });
+
+    function changeToConvertingInputAfterChangingCurrency() {
+        var valueForConverting = +$('#from-converting-input').val();
+
+        var convertedValue = valueForConverting * fromRate / toRate;
+
+        $('#to-converting-input').val(convertedValue);
+    }
+
+    function initSelect(selectId) {
+        var $select = $(selectId);
         var selectOptions = '';
 
         for (var i = 0; i < currencies.length; i++) {
-            selectOptions += '<option value="' + currencies[i].code + '">' + currencies[i].name + '(' + currencies[i].abbreviation + ')' + '</option>';
+            selectOptions += '<option value="' + currencies[i].rate + '">' + currencies[i].name + '(' + currencies[i].abbreviation + ')' + '</option>';
         }
 
         $select.append(selectOptions);
