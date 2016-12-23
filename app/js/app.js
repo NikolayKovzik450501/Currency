@@ -15,7 +15,7 @@
     $.ajax({
         type: 'GET',
         url: 'http://www.nbrb.by/API/ExRates/Currencies'      
-    }).then(function(response) { 
+    }).then(function(response){ 
          currencies = response.map(function(item) {    // map возвращает новый массив на основании response
             var dateEnd = Date.parse(item.Cur_DateEnd); 
             //если срок вывода валюты из оборота меньше текущего времени, то валюта не поддерживается нацбанком
